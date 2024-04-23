@@ -1,5 +1,7 @@
 package com.epam.rd.autocode.concurrenttictactoe;
 
+import java.util.Arrays;
+
 public class TicTacToeImpl implements TicTacToe {
 
 	private static char[][] table;
@@ -27,16 +29,20 @@ public class TicTacToeImpl implements TicTacToe {
 			if (' ' == table[x][y]) {
 				table[x][y] = mark;
 				lastMark = mark;
-			} else {
+			} /*else {
 				throw new IllegalArgumentException();
-			}
+			}*/
 		}
 	}
 
 	@Override
 	public char[][] table() {
 		synchronized (Thread.class) {
-			return table;
+			char[][] tempBoard = new char[table.length][table[0].length];
+			for (int i = 0; i < table.length; i++) {
+				tempBoard[i] = Arrays.copyOf(table[i], table[i].length);
+			}
+			return tempBoard;
 		}
 	}
 
